@@ -12,7 +12,6 @@
 | 0x731    | Statystyki wagi 1 min+max (HX711 float) | Standard  | 8       | \[0..3]=min (float), \[4..7]=max (float)                                  | Min i max float HX711 nr 1                              |
 | 0x732    | Statystyki wagi 2 avg+std (HX711 float) | Standard  | 8       | \[0..3]=avg (float), \[4..7]=stddev (float)                               | Średnia i odchylenie standardowe float HX711 nr 2       |
 | 0x733    | Statystyki wagi 2 min+max (HX711 float) | Standard  | 8       | \[0..3]=min (float), \[4..7]=max (float)                                  | Min i max float HX711 nr 2                              |
-| 0x710    | Stan przycisków DI                      | Standard  | 8       | \[0]=bitmask, \[1..7]=0                                                   | Bitmask przycisków DI0–DI3                              |
 | 0x721    | Potwierdzenie wykonania (ACK)           | Standard  | 8       | \[0]=0x01, \[1]=cmd, \[2]=waga, \[3..7]=0                                 | Potwierdzenie wykonania danej komendy przez urządzenie  |
 | 0x722    | Dane kalibracyjne cz.1 (HX711)          | Standard  | 8       | \[0]=waga, \[1..4]=raw\_zero (int32), \[5..6]=raw\_known (int16)          | Kalibracja tensometru – część 1                         |
 | 0x723    | Dane kalibracyjne cz.2 (HX711)          | Standard  | 8       | \[0..3]=known\_mass\_kg (float), \[4..7]=0                                | Kalibracja tensometru – część 2                         |
