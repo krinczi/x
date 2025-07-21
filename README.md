@@ -27,7 +27,7 @@
 | -------- | -------------------- | --------- | ------- | ------------------------------------------------------------------------------ | ------------------------------------------------- |
 | 0x720    | Komenda kalibracyjna | Standard  | 8       | \[0]=cmd, \[1..4]=wartość\_kg (float), \[5]=target, \[6..7]=opcjonalnie window | Komendy kalibracyjne dla HX711 i IMU, patrz niżej |
 
-### 🎯 Możliwe komendy (`cmd` w bajcie `RxData[0]` z ramki `0x720`)
+### 🔢 Komendy kalibracyjne (`cmd` w bajcie `RxData[0]` z ramki `0x720`)
 
 | cmd  | Opis                                                                  |
 | ---- | --------------------------------------------------------------------- |
@@ -39,3 +39,18 @@
 | 0x06 | Ustawienie rozmiaru okna (target = 0x01 lub 0x02), window = uint16\_t |
 | 0x11 | Kalibracja ACC+GYRO IMU1 (target = 0x01)                              |
 | 0x12 | Kalibracja tilt (pitch/roll) IMU1 (target = 0x01)                     |
+
+## 🧭 Kodowanie flag IMU (dla ramek ACC 0x760–0x763 i GYRO 0x765–0x768)
+
+| acc\_flags (bajt 6) | Zakres akcelerometru | Wartość w driverze STM |
+| ------------------- | -------------------- | ---------------------- |
+| 0                   | ±2g                  | 0                      |
+| 1                   | ±4g                  | 1                      |
+| 2                   | ±8g                  | 2                      |
+| 3                   | ±16g                 | 3                      |
+
+| gyro\_flags (bajt 7) | Zakres żyroskopu | Wartość w driverze STM |
+| -------------------- | ---------------- | ---------------------- |
+| 0                    | 245 dps          | 0                      |
+| 1                    | 500 dps          | 1                      |
+| 2                    | 2000 dps         | 2                      |
