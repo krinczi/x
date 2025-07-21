@@ -37,7 +37,6 @@
 | 0x04 | Wysłanie danych kalibracyjnych HX711 (target = 0x01 lub 0x02)         |
 | 0x05 | Ustawienie flagi debug (target = 0x00 lub 0x01)                       |
 | 0x06 | Ustawienie rozmiaru okna (target = 0x01 lub 0x02), window = uint16\_t |
-| 0x11 | Kalibracja ACC+GYRO IMU1 (target = 0x01)                              |
 | 0x12 | Kalibracja tilt (pitch/roll) IMU1 (target = 0x01)                     |
 
 ## 🧭 Kodowanie flag IMU (dla ramek ACC 0x760–0x763 i GYRO 0x765–0x768)
