@@ -53,3 +53,73 @@
 | 0                    | 245 dps          | 0                      |
 | 1                    | 500 dps          | 1                      |
 | 2                    | 2000 dps         | 2                      |
+
+---
+
+## 🧪 Przykład transmisji – ramka ACC i GYRO
+
+**Stan (IMU2):**
+
+* ACC (0x761): ax = 1000, ay = -500, az = 333, acc\_flags = 3 (16g), gyro\_flags = 2 (2000dps)
+* GYRO (0x766): gx = 1200, gy = 0, gz = -900, acc\_flags = 3 (16g), gyro\_flags = 2 (2000dps)
+
+**ACC (0x761):**
+
+| Bajt | Dane (HEX) | Znaczenie             |
+| ---- | ---------- | --------------------- |
+| 0-1  | `E8 03`    | ax = 1000             |
+| 2-3  | `0C FE`    | ay = -500             |
+| 4-5  | `4D 01`    | az = 333              |
+| 6    | `03`       | acc\_flags = 16g      |
+| 7    | `02`       | gyro\_flags = 2000dps |
+
+**GYRO (0x766):**
+
+| Bajt | Dane (HEX) | Znaczenie             |
+| ---- | ---------- | --------------------- |
+| 0-1  | `B0 04`    | gx = 1200             |
+| 2-3  | `00 00`    | gy = 0                |
+| 4-5  | `28 FC`    | gz = -900             |
+| 6    | `03`       | acc\_flags = 16g      |
+| 7    | `02`       | gyro\_flags = 2000dps |
+
+---
+
+## ⚙️ Dekodowanie wartości int16\_t na rzeczywiste jednostki
+
+### Akcelerometr (ACC)
+
+* Dane surowe: 3 × int16\_t → `ax`, `ay`, `az`
+* Jednostka: **mg** (mili-g)
+* Przeliczniki:
+
+  * ±2g  → 0.061 mg/LSB
+  * ±4g  → 0.122 mg/LSB
+  * ±8g  → 0.244 mg/LSB
+  * ±16g → 0.488 mg/LSB
+* Wzór do m/s²:
+
+  ```
+  acc_m_s2 = acc_raw × LSB_value × 9.81 / 1000
+  ```
+
+### Żyroskop (GYRO)
+
+* Dane surowe: 3 × int16\_t → `gx`, `gy`, `gz`
+* Jednostka: **mdps** (mili-deg/s)
+* Przeliczniki:
+
+  * 245 dps  → 8.75 mdps/LSB
+  * 500 dps  → 17.5 mdps/LSB
+  * 2000 dps → 70.0 mdps/LSB
+* Wzór:
+
+  ```
+  gyro_dps = (gyro_raw × LSB_value) / 1000.0
+  ```
+
+## ⚙️ Uwagi techniczne
+
+* Ramki: **standard frame (11-bit ID)**, **DLC = 8 bajtów**
+* Kolejność bajtów: **little-endian** (LSB first)
+* Kalibracja i zapis obsługiwane przez STM32 z potwierdzeniami (ACK)
