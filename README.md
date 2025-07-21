@@ -28,15 +28,16 @@
 
 ### 🔢 Komendy kalibracyjne (`cmd` w bajcie `RxData[0]` z ramki `0x720`)
 
-| cmd  | Opis                                                                  |
-| ---- | --------------------------------------------------------------------- |
-| 0x01 | Kalibracja zera (TARE) HX711 (target = 0x01 lub 0x02)                 |
-| 0x02 | Kalibracja znaną masą HX711 (target = 0x01 lub 0x02), masa = float    |
-| 0x03 | Zapis kalibracji do FLASH (target = 0xFF)                             |
-| 0x04 | Wysłanie danych kalibracyjnych HX711 (target = 0x01 lub 0x02)         |
-| 0x05 | Ustawienie flagi debug (target = 0x00 lub 0x01)                       |
-| 0x06 | Ustawienie rozmiaru okna (target = 0x01 lub 0x02), window = uint16\_t |
-| 0x12 | Kalibracja tilt (pitch/roll) IMU1 (target = 0x01)                     |
+| Kod  | Znaczenie                        | Opis                                                                   |
+| ---- | -------------------------------- | ---------------------------------------------------------------------- |
+| 0x01 | Kalibracja 0 kg                  | Zapamiętaj bieżący odczyt jako wartość zerową (raw\_zero)              |
+| 0x02 | Kalibracja X kg                  | Zapamiętaj bieżący odczyt jako odpowiadający X kg                      |
+| 0x03 | Zapis do Flash                   | Trwale zapisuje raw\_zero, raw\_known, known\_mass\_kg (target = 0xFF) |
+| 0x04 | Odczyt z Flash                   | Odczyt danych kalibracyjnych (ramki 0x722 i 0x723)                     |
+| 0x05 | Kalibracja IMU                   | Kalibruje IMU, wysyła ramkę 0x11 z danymi kalibracji                   |
+| 0x06 | Ustaw okno uśredniania dla HX711 | Ustawia rozmiar okna (bajty 6-7: uint16\_t, target: 0x01/0x02)         |
+| 0x11 | Kalibracja IMU                   | bajty 1-4: liczba próbek jako float, bajt 5: id IMU (0x01-0x04)        |
+| 0x12 | Kalibracja tilt                  | Zapisuje offset pitch/roll dla IMU                                     |
 
 ## 🧭 Kodowanie flag IMU (dla ramek ACC 0x760–0x763 i GYRO 0x765–0x768)
 
@@ -52,3 +53,8 @@
 | 0                    | 245 dps          | 0                      |
 | 1                    | 500 dps          | 1                      |
 | 2                    | 2000 dps         | 2                      |
+
+
+
+
+
